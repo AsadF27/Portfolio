@@ -1,0 +1,15 @@
+# Render deploy config for this Next.js app.
+# You can either fill the dashboard fields manually (New > Web Service)
+# or use this Blueprint directly (New > Blueprint).
+services:
+  - type: web
+    name: asad-faridi-portfolio
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
