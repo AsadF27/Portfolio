@@ -31,15 +31,22 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07070a",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0d16" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f7fd" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
 
+// Sets the theme before first paint (no flash). Defaults to dark.
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme', t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={GeistSans.variable} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={GeistSans.variable} suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <div className="grain" aria-hidden />
         <Cursor />
         <SmoothScroll>{children}</SmoothScroll>

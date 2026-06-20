@@ -7,7 +7,9 @@ export default function Marquee({
   items: React.ReactNode[];
   speed?: "normal" | "slow";
 }) {
-  const doubled = [...items, ...items];
+  // Repeat enough that one animated half always exceeds the viewport, so the
+  // -50% loop is seamless (no gap / jump even with only a few unique items).
+  const seq = [...items, ...items, ...items, ...items];
   return (
     <div
       className="relative overflow-hidden"
@@ -16,11 +18,11 @@ export default function Marquee({
         WebkitMaskImage: "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)",
       }}
     >
-      <div className={`marquee-track ${speed === "slow" ? "animate-marquee-slow" : "animate-marquee"}`}>
-        {doubled.map((it, i) => (
-          <span key={i} className="flex items-center">
+      <div className={`flex w-max ${speed === "slow" ? "animate-marquee-slow" : "animate-marquee"}`}>
+        {seq.map((it, i) => (
+          <div key={i} className="flex shrink-0 items-center">
             {it}
-          </span>
+          </div>
         ))}
       </div>
     </div>

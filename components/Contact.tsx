@@ -19,7 +19,7 @@ export default function Contact() {
     <footer id="contact" className="section relative overflow-hidden pb-12">
       <div
         className="glow"
-        style={{ left: "50%", top: "10%", width: "44rem", height: "30rem", transform: "translateX(-50%)", background: "rgba(244,182,60,0.16)" }}
+        style={{ left: "50%", top: "10%", width: "44rem", height: "30rem", transform: "translateX(-50%)", background: "rgb(var(--brand-rgb) / 0.18)" }}
       />
 
       <div className="shell relative">

@@ -3,37 +3,83 @@
 @tailwind utilities;
 
 /* ============================================================
-   DESIGN TOKENS
-   One brand colour (solar gold), a deep ink canvas, lighter
-   card surfaces for depth, six type sizes — nothing more.
+   DESIGN TOKENS — "control room / blueprint"
+   Blue is the medium, not an accent. Two themes, two moods:
+   dark = midnight ops room · light = schematic on cool paper.
+   Colours are "R G B" channels so Tailwind opacity utilities flip with theme.
    ============================================================ */
+:root,
+[data-theme="dark"] {
+  --bg-rgb: 6 10 22; /* #060a16 deep navy-black ground */
+  --bg-soft-rgb: 9 15 31;
+  --surface-rgb: 17 26 50; /* visibly blue-tinted panel */
+  --surface-2-rgb: 22 35 64;
+  --surface-3-rgb: 30 46 82;
+  --ink-rgb: 234 240 255;
+  --ink-2-rgb: 162 178 214;
+  --ink-3-rgb: 122 136 174;
+
+  --brand-rgb: 77 124 255; /* #4d7cff azure — primary signal */
+  --brand-soft-rgb: 138 169 255;
+  --brand-deep-rgb: 47 86 214;
+  --accent2-rgb: 52 211 238; /* #34d3ee cyan — "live" telemetry, used sparingly */
+  --on-brand-rgb: 255 255 255;
+
+  --line: rgba(125, 150, 230, 0.14);
+  --line-soft: rgba(125, 150, 230, 0.07);
+  --grid-line: rgba(125, 150, 230, 0.05);
+  --card-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 30px 60px -42px rgba(2, 6, 20, 0.85);
+  --grain-opacity: 0.05;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg-rgb: 237 242 251; /* #edf2fb cool blueprint paper */
+  --bg-soft-rgb: 229 236 248;
+  --surface-rgb: 255 255 255;
+  --surface-2-rgb: 241 245 253;
+  --surface-3-rgb: 224 232 246;
+  --ink-rgb: 12 20 48; /* #0c1430 navy ink */
+  --ink-2-rgb: 60 76 113;
+  --ink-3-rgb: 103 119 150;
+
+  --brand-rgb: 36 86 214; /* #2456d6 ink-blue */
+  --brand-soft-rgb: 77 124 255;
+  --brand-deep-rgb: 23 58 160;
+  --accent2-rgb: 9 145 200; /* #0991c8 cyan, darker for paper contrast */
+  --on-brand-rgb: 255 255 255;
+
+  --line: rgba(30, 58, 138, 0.16);
+  --line-soft: rgba(30, 58, 138, 0.08);
+  --grid-line: rgba(30, 58, 138, 0.06);
+  --card-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 22px 44px -26px rgba(18, 40, 95, 0.24);
+  --grain-opacity: 0.028;
+  color-scheme: light;
+}
+
 :root {
-  --bg: #07070a;
-  --bg-soft: #0b0b11;
-  --surface: #121319;
-  --surface-2: #181a22;
-  --surface-3: #1f212b;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-soft: rgba(255, 255, 255, 0.045);
+  --bg: rgb(var(--bg-rgb));
+  --bg-soft: rgb(var(--bg-soft-rgb));
+  --surface: rgb(var(--surface-rgb));
+  --surface-2: rgb(var(--surface-2-rgb));
+  --surface-3: rgb(var(--surface-3-rgb));
+  --ink: rgb(var(--ink-rgb));
+  --ink-2: rgb(var(--ink-2-rgb));
+  --ink-3: rgb(var(--ink-3-rgb));
+  --brand: rgb(var(--brand-rgb));
+  --brand-soft: rgb(var(--brand-soft-rgb));
+  --brand-deep: rgb(var(--brand-deep-rgb));
+  --accent2: rgb(var(--accent2-rgb));
+  --on-brand: rgb(var(--on-brand-rgb));
 
-  --ink: #f2f0ec;
-  --ink-2: #adadb6;
-  --ink-3: #8b8b95;
-
-  --brand: #f4b63c;
-  --brand-soft: #ffd27a;
-  --brand-deep: #c98a18;
-  --brand-ink: #160f02;
-  --cool: #5a6bff;
-
-  /* The entire scale — exactly six font sizes, nothing else */
-  --fs-display: clamp(3rem, 1.6rem + 6.4vw, 6.75rem); /* 1 */
-  --fs-h1: clamp(2.1rem, 1.4rem + 3.2vw, 3.9rem); /* 2 */
-  --fs-h2: clamp(1.5rem, 1.18rem + 1.5vw, 2.2rem); /* 3 */
-  --fs-h3: clamp(1.12rem, 1.02rem + 0.5vw, 1.4rem); /* 4 */
-  --fs-body: 1.0625rem; /* 5 */
-  --fs-small: 0.84rem; /* 6 — captions, labels, chips, meta */
-  --fs-label: 0.84rem; /* alias of small (uppercase variant) */
+  /* Six font sizes — the entire scale */
+  --fs-display: clamp(2.75rem, 1.5rem + 5vw, 5.5rem);
+  --fs-h1: clamp(2.1rem, 1.4rem + 3.2vw, 3.9rem);
+  --fs-h2: clamp(1.5rem, 1.18rem + 1.5vw, 2.2rem);
+  --fs-h3: clamp(1.12rem, 1.02rem + 0.5vw, 1.4rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.84rem;
+  --fs-label: 0.84rem;
 
   --shell: 1240px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -46,10 +92,9 @@
 html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  scroll-behavior: auto; /* Lenis handles smoothing */
+  scroll-behavior: auto;
 }
 
-/* Lenis smooth-scroll recommended styles */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -66,7 +111,12 @@ html.lenis body {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
+  /* faint blueprint grid — the signature, scrolls with the page (cheap) */
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 74px 74px;
+  background-position: center top;
   color: var(--ink);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
   font-size: var(--fs-body);
@@ -74,14 +124,14 @@ body {
   letter-spacing: -0.011em;
   overflow-x: hidden;
   font-feature-settings: "ss01", "cv01", "cv11";
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
 ::selection {
   background: var(--brand);
-  color: var(--brand-ink);
+  color: var(--on-brand);
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -89,16 +139,13 @@ body {
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #22232d;
+  background: var(--surface-3);
   border-radius: 999px;
   border: 2px solid var(--bg);
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #30323e;
-}
 
 /* ============================================================
-   TYPOGRAPHY UTILITIES
+   TYPOGRAPHY
    ============================================================ */
 .t-display {
   font-size: var(--fs-display);
@@ -148,7 +195,6 @@ body {
   border: 0;
 }
 
-/* Keyboard focus — visible on every interactive element */
 a:focus-visible,
 button:focus-visible,
 [role="button"]:focus-visible,
@@ -167,7 +213,6 @@ button:focus-visible,
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 4vw, 2.75rem);
 }
-
 .section {
   position: relative;
   padding-block: clamp(5rem, 11vw, 9.5rem);
@@ -177,9 +222,10 @@ button:focus-visible,
    TEXT EFFECTS
    ============================================================ */
 .gold-text {
-  background: linear-gradient(100deg, var(--brand-soft) 0%, var(--brand) 45%, var(--brand-deep) 100%);
+  background: linear-gradient(100deg, var(--accent2) 0%, var(--brand) 52%, var(--brand-deep) 100%);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 .muted {
@@ -202,12 +248,11 @@ button:focus-visible,
   content: "";
   width: 26px;
   height: 1px;
-  background: linear-gradient(90deg, var(--brand), transparent);
+  background: linear-gradient(90deg, var(--accent2), transparent);
 }
 
 /* ============================================================
-   BUTTONS — default / hover / active / disabled
-   Generous padding: horizontal ~2x vertical.
+   BUTTONS
    ============================================================ */
 .btn {
   position: relative;
@@ -225,7 +270,6 @@ button:focus-visible,
   border: 1px solid transparent;
   transition: transform 0.45s var(--ease), background 0.4s var(--ease),
     border-color 0.4s var(--ease), color 0.4s var(--ease), box-shadow 0.45s var(--ease);
-  will-change: transform;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -238,46 +282,41 @@ button:focus-visible,
   cursor: not-allowed;
   pointer-events: none;
 }
-
 .btn-primary {
-  background: linear-gradient(180deg, var(--brand-soft), var(--brand));
-  color: var(--brand-ink);
-  box-shadow: 0 8px 30px -10px rgba(244, 182, 60, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, var(--brand-soft), var(--brand) 60%, var(--brand-deep));
+  color: var(--on-brand);
+  box-shadow: 0 10px 34px -10px rgb(var(--brand-rgb) / 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   font-weight: 600;
 }
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 48px -14px rgba(244, 182, 60, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px -14px rgb(var(--brand-rgb) / 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
-
 .btn-ghost {
-  background: transparent;
+  background: rgb(var(--brand-rgb) / 0.04);
   color: var(--ink);
   border-color: var(--line);
 }
 .btn-ghost:hover {
-  border-color: rgba(244, 182, 60, 0.55);
-  color: var(--brand-soft);
+  border-color: rgb(var(--brand-rgb) / 0.6);
+  color: var(--brand);
   transform: translateY(-3px);
-  box-shadow: 0 18px 40px -22px rgba(244, 182, 60, 0.4);
+  box-shadow: 0 18px 40px -22px rgb(var(--brand-rgb) / 0.45);
 }
-
 .btn-lg {
   padding: 1.4rem 3rem;
 }
 
 /* ============================================================
    SURFACES
-   Depth from lighter surfaces + faint top highlight, not harsh shadows.
    ============================================================ */
 .card {
   position: relative;
   background: linear-gradient(180deg, var(--surface-2), var(--surface));
   border: 1px solid var(--line);
   border-radius: 1.5rem;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 30px 60px -40px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--card-shadow);
 }
-
 .chip {
   display: inline-flex;
   align-items: center;
@@ -285,39 +324,71 @@ button:focus-visible,
   padding: 0.42rem 0.8rem;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgb(var(--brand-rgb) / 0.05);
   font-size: var(--fs-small);
   letter-spacing: -0.005em;
   color: var(--ink-2);
   white-space: nowrap;
 }
-
 .hairline {
   height: 1px;
   width: 100%;
   background: linear-gradient(90deg, transparent, var(--line), transparent);
 }
-
-/* Soft radial brand glow behind elements */
 .glow {
   position: absolute;
   border-radius: 999px;
-  filter: blur(90px);
-  opacity: 0.4;
+  filter: blur(48px);
+  opacity: 0.5;
   pointer-events: none;
   z-index: 0;
 }
 
+/* Live/telemetry dot — pulsing cyan signal */
+.signal {
+  position: relative;
+  display: inline-flex;
+  height: 0.5rem;
+  width: 0.5rem;
+}
+.signal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--accent2);
+  opacity: 0.65;
+  animation: signal-ping 2s var(--ease) infinite;
+}
+.signal::after {
+  content: "";
+  position: relative;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 999px;
+  background: var(--accent2);
+}
+@keyframes signal-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
 /* ============================================================
-   FILM GRAIN — premium texture overlay
+   FILM GRAIN
    ============================================================ */
 .grain {
   position: fixed;
   inset: 0;
   z-index: 40;
   pointer-events: none;
-  opacity: 0.04;
-  mix-blend-mode: soft-light;
+  opacity: var(--grain-opacity);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 220px 220px;
 }
@@ -353,34 +424,26 @@ button:focus-visible,
 .cursor-ring[data-active="true"] {
   width: 64px;
   height: 64px;
-  background: rgba(244, 182, 60, 0.12);
-  border-color: rgba(244, 182, 60, 0.5);
+  background: rgb(var(--brand-rgb) / 0.16);
+  border-color: rgb(var(--brand-rgb) / 0.6);
 }
 @media (hover: hover) and (pointer: fine) {
   body.has-custom-cursor {
     cursor: none;
   }
   body.has-custom-cursor a,
-  body.has-custom-cursor button {
+  body.has-custom-cursor button,
+  body.has-custom-cursor [role="button"] {
     cursor: none;
   }
 }
 
-/* Animated reveal default (before GSAP hydration, content stays visible if JS off) */
-.will-reveal {
-  opacity: 1;
-}
-
-/* Marquee row */
 .marquee-track {
   display: flex;
   width: max-content;
   will-change: transform;
 }
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

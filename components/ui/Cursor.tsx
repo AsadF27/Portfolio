@@ -17,6 +17,28 @@ export default function Cursor() {
     let rx = mx;
     let ry = my;
     let raf = 0;
+    let running = false;
+
+    // Self-terminating loop: settles and stops when the cursor is idle,
+    // so it isn't burning a RAF + composite every frame for the whole session.
+    const tick = () => {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      if (ring.current) {
+        ring.current.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      }
+      if (Math.hypot(mx - rx, my - ry) > 0.1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        running = false;
+      }
+    };
+    const start = () => {
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(tick);
+      }
+    };
 
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
@@ -25,25 +47,18 @@ export default function Cursor() {
         dot.current.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
       }
       const target = e.target as HTMLElement;
-      const interactive = !!target.closest("a, button, [data-cursor='hover']");
+      const interactive = !!target.closest("a, button, [role='button'], [data-cursor='hover']");
       if (ring.current) ring.current.dataset.active = interactive ? "true" : "false";
-    };
-
-    const loop = () => {
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
-      if (ring.current) {
-        ring.current.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      }
-      raf = requestAnimationFrame(loop);
+      start();
     };
 
     window.addEventListener("mousemove", onMove);
-    raf = requestAnimationFrame(loop);
+    start();
 
     return () => {
       window.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(raf);
+      running = false;
       document.body.classList.remove("has-custom-cursor");
     };
   }, []);

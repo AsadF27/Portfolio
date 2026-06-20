@@ -25,8 +25,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     }
 
     const lenis = new Lenis({
-      duration: 1.12,
-      lerp: 0.1,
+      lerp: 0.13,
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1.4,

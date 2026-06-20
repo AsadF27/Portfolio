@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -16,20 +16,17 @@ const vertexShader = /* glsl */ `
   void main() {
     vec3 p = position;
 
-    // Swirl: angular speed falls off with distance from the core.
     float distanceToCenter = length(p.xz);
     float angle = atan(p.x, p.z);
     angle += (1.0 / (distanceToCenter + 0.4)) * uTime * 0.22;
     p.x = cos(angle) * distanceToCenter;
     p.z = sin(angle) * distanceToCenter;
 
-    // Gentle vertical drift for organic depth.
     p.y += sin(uTime * 0.4 + distanceToCenter * 1.6) * 0.07;
 
     vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mvPosition;
 
-    // R3F's Canvas dpr already scales the drawing buffer — don't multiply again.
     gl_PointSize = uSize * aScale;
     gl_PointSize *= (1.0 / max(-mvPosition.z, 0.1));
     gl_PointSize = clamp(gl_PointSize, 0.0, uSize * 3.0);
@@ -49,7 +46,7 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-function Galaxy({ count }: { count: number }) {
+function Galaxy({ count, dark }: { count: number; dark: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const mouse = useRef({ x: 0, y: 0 });
@@ -66,9 +63,10 @@ function Galaxy({ count }: { count: number }) {
     const randomness = 0.55;
     const randomnessPower = 2.7;
 
-    const inside = new THREE.Color("#ffd27a"); // warm solar core
-    const mid = new THREE.Color("#f4b63c"); // brand gold
-    const outside = new THREE.Color("#5a6bff"); // cool indigo rim
+    // Dark = glowing constellation (additive, bright). Light = ink schematic (normal blend, deep blue).
+    const inside = new THREE.Color(dark ? "#dce8ff" : "#2456d6");
+    const mid = new THREE.Color(dark ? "#4d7cff" : "#1e40af");
+    const outside = new THREE.Color(dark ? "#34d3ee" : "#0e7490");
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
@@ -82,19 +80,14 @@ function Galaxy({ count }: { count: number }) {
         randomness *
         radius;
 
-      const rx = rand();
-      const ry = rand() * 0.45;
-      const rz = rand();
-
-      positions[i3] = Math.cos(branchAngle + spinAngle) * radius + rx;
-      positions[i3 + 1] = ry;
-      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + rz;
+      positions[i3] = Math.cos(branchAngle + spinAngle) * radius + rand();
+      positions[i3 + 1] = rand() * 0.45;
+      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + rand();
 
       const t = radius / radiusMax;
       const c = inside.clone();
       if (t < 0.5) c.lerpColors(inside, mid, t / 0.5);
       else c.lerpColors(mid, outside, (t - 0.5) / 0.5);
-      // slight brightness scatter
       const b = 0.7 + Math.random() * 0.5;
       colors[i3] = c.r * b;
       colors[i3 + 1] = c.g * b;
@@ -103,12 +96,12 @@ function Galaxy({ count }: { count: number }) {
       scales[i] = 0.4 + Math.random() * Math.random() * 2.4;
     }
     return { positions, colors, scales };
-  }, [count]);
+  }, [count, dark]);
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uSize: { value: 34 },
+      uSize: { value: 28 },
     }),
     []
   );
@@ -131,11 +124,10 @@ function Galaxy({ count }: { count: number }) {
   }, []);
 
   useFrame((_, delta) => {
-    if (matRef.current) matRef.current.uniforms.uTime.value += delta;
+    if (matRef.current) matRef.current.uniforms.uTime.value += Math.min(delta, 0.05);
     const g = groupRef.current;
     if (!g) return;
     const s = scroll.current;
-    // base tilt + mouse parallax + scroll recede
     const targetX = 0.32 + mouse.current.y * 0.18 + s * 0.5;
     const targetZ = mouse.current.x * 0.12;
     g.rotation.x += (targetX - g.rotation.x) * 0.05;
@@ -159,7 +151,7 @@ function Galaxy({ count }: { count: number }) {
           fragmentShader={fragmentShader}
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={dark ? THREE.AdditiveBlending : THREE.NormalBlending}
         />
       </points>
     </group>
@@ -167,20 +159,47 @@ function Galaxy({ count }: { count: number }) {
 }
 
 export default function HeroScene() {
-  // Lighter particle budget on small screens.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(true);
+  const [dark, setDark] = useState(true);
+
   const count = useMemo(() => {
-    if (typeof window === "undefined") return 6500;
-    return window.innerWidth < 768 ? 3200 : 6800;
+    if (typeof window === "undefined") return 4800;
+    return window.innerWidth < 768 ? 2000 : 4800;
   }, []);
 
+  // Pause the render loop when the hero scrolls out of view.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { rootMargin: "200px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Track theme — galaxy is a dark-mode effect; pause + hide it in light mode.
+  useEffect(() => {
+    const read = () => setDark(document.documentElement.getAttribute("data-theme") !== "light");
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => mo.disconnect();
+  }, []);
+
+  // Render in both themes (galaxy is theme-aware); just pause when offscreen.
+  const active = inView;
+
   return (
-    <Canvas
-      camera={{ position: [0, 0.5, 6.5], fov: 56 }}
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      style={{ width: "100%", height: "100%" }}
-    >
-      <Galaxy count={count} />
-    </Canvas>
+    <div ref={wrapRef} className="hero-canvas" style={{ width: "100%", height: "100%" }}>
+      <Canvas
+        frameloop={active ? "always" : "never"}
+        camera={{ position: [0, 0.5, 6.5], fov: 56 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <Galaxy key={dark ? "dark" : "light"} count={count} dark={dark} />
+      </Canvas>
+    </div>
   );
 }

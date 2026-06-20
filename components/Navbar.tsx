@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { navLinks, profile } from "@/lib/content";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 function smoothTo(href: string) {
   const el = document.querySelector(href) as HTMLElement | null;
@@ -15,20 +16,14 @@ function smoothTo(href: string) {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    let last = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 24);
-      setHidden(y > 320 && y > last && !menuOpen);
-      last = y;
-    };
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [menuOpen]);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -40,23 +35,22 @@ export default function Navbar() {
 
   const navigate = (href: string) => {
     setMenuOpen(false);
-    // allow the overlay to start closing before scrolling
     setTimeout(() => smoothTo(href), 10);
   };
 
+  const solid = scrolled || menuOpen;
+
   return (
     <>
-      <header
-        className="fixed inset-x-0 top-0 z-50 transition-transform duration-500 ease-out-expo"
-        style={{ transform: hidden ? "translateY(-120%)" : "translateY(0)" }}
-      >
+      <header className="fixed inset-x-0 top-0 z-50">
         <div
           className="mx-auto mt-3 flex items-center justify-between rounded-full px-3 py-2 transition-all duration-500 ease-out-expo md:mt-4"
           style={{
             width: "min(100% - 1.5rem, var(--shell))",
-            background: scrolled || menuOpen ? "rgba(12,12,18,0.72)" : "transparent",
-            backdropFilter: scrolled || menuOpen ? "blur(16px)" : "none",
-            border: scrolled || menuOpen ? "1px solid var(--line)" : "1px solid transparent",
+            background: solid ? "rgb(var(--bg-soft-rgb) / 0.6)" : "transparent",
+            backdropFilter: solid ? "blur(16px) saturate(150%)" : "none",
+            WebkitBackdropFilter: solid ? "blur(16px) saturate(150%)" : "none",
+            border: `1px solid ${solid ? "var(--line)" : "transparent"}`,
           }}
         >
           <a
@@ -94,6 +88,7 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <a
               href="#contact"
               onClick={(e) => {
@@ -136,7 +131,7 @@ export default function Navbar() {
       <div
         className="fixed inset-0 z-[45] flex flex-col items-center justify-center gap-2 transition-all duration-500 ease-out-expo md:hidden"
         style={{
-          background: "rgba(7,7,10,0.96)",
+          background: "rgb(var(--bg-rgb) / 0.97)",
           backdropFilter: "blur(20px)",
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? "auto" : "none",

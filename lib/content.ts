@@ -1,6 +1,6 @@
 /**
  * Single source of truth for portfolio content.
- * Distilled from Asad Faridi's resume + 7 project READMEs.
+ * Projects are curated two-tier: significant points (front) + see-more detail (tucked).
  */
 
 export const profile = {
@@ -14,74 +14,55 @@ export const profile = {
   phone: "+91 92295 75417",
   available: "Open to building enterprise AI platforms",
 
-  // The USP — a few powerful words, audience + edge
   uspLead: "I build enterprise AI systems that turn",
   uspRotate: ["weeks of manual work", "fragmented spreadsheets", "hours of GPU compute", "siloed workflows"],
   uspTail: "into seconds.",
 
-  keywords: [
-    "RAG & Vector Search",
-    "GPU-Accelerated AI",
-    "Enterprise Web Portals",
-    "Sub-Second Latency",
-    "Microservices",
-  ],
+  keywords: ["RAG & Vector Search", "GPU-Accelerated AI", "Enterprise Web Portals", "Sub-Second Latency", "Microservices"],
 
-  bio: "I'm a Digital Transformation engineer at Fourth Partner Energy, where I architect AI-powered enterprise platforms that replace manual, fragmented workflows with fast, auditable digital systems — RAG assistants, GPU-accelerated face search, and microservices portals secured with Azure Entra ID.",
-  bio2: "I care about shipping measurable impact: sub-second latency, 88% faster pipelines, and tools that hundreds of colleagues use every day. A competitive programmer at heart, I bring a deep foundation in data structures, algorithms and system design to every problem I touch.",
+  bio: "Digital Transformation engineer at Fourth Partner Energy. I build the platforms that replace slow, manual work with fast, auditable systems people use every day.",
+  bio2: "Measurable impact over busywork — with a competitive programmer's instinct for getting the fundamentals right. The numbers are in the work below.",
 };
 
 export const heroStats = [
   { value: "100+", label: "colleagues using tools I shipped" },
   { value: "88%", label: "faster GPU preprocessing pipeline" },
-  { value: "90K+", label: "indexed faces searched in under 5s" },
+  { value: "< 5s", label: "to find yourself across event galleries" },
   { value: "2+", label: "years engineering in production" },
 ];
 
 export const socials = [
-  { label: "LinkedIn", short: "in", url: "https://www.linkedin.com/in/asad27" },
-  { label: "GeeksforGeeks", short: "GfG", url: "https://www.geeksforgeeks.org/user/asad27" },
-  { label: "CodeChef", short: "CC", url: "https://www.codechef.com/users/asad_27" },
-  { label: "Codeforces", short: "CF", url: "https://codeforces.com/profile/kaju.pista" },
+  { label: "LinkedIn", url: "https://www.linkedin.com/in/asad27" },
+  { label: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/user/asad27" },
+  { label: "CodeChef", url: "https://www.codechef.com/users/asad_27" },
+  { label: "Codeforces", url: "https://codeforces.com/profile/kaju.pista" },
 ];
 
 export const proofPoints = [
   "Ranked 1st at institute on GeeksforGeeks (Global Rank 2464)",
-  "Max rating 1603 (3★) on CodeChef · Specialist (1511) on Codeforces",
-  "Level 8 on Code360 with 70k+ EXP",
+  "Max rating 1603 (3★) on CodeChef · Specialist on Codeforces",
   "AI tools adopted across 100+ employees at Fourth Partner Energy",
 ];
 
 export type SkillGroup = { group: string; items: string[] };
 export const skillGroups: SkillGroup[] = [
-  { group: "Languages", items: ["C / C++", "Python", "X++", "MS SQL"] },
-  {
-    group: "AI / ML & Search",
-    items: ["RAG", "FAISS", "Vector Search", "InsightFace (ArcFace)", "Hugging Face", "CUDA", "TensorRT", "Prompt Engineering"],
-  },
-  { group: "Frameworks & Web", items: ["Flask", "FastAPI", "Next.js", "React", "Gunicorn", "REST APIs"] },
-  {
-    group: "Cloud & Architecture",
-    items: ["Azure App Service", "Entra ID (SSO/RBAC)", "Microsoft Graph", "Microservices", "Hub-and-Spoke", "Zero-Copy Streaming"],
-  },
-  { group: "Tools & Core", items: ["Dynamics 365 F&O", "Power BI", "Git", "DSA", "System Design", "DBMS"] },
+  { group: "Languages", items: ["C / C++", "Python", "X++", "SQL"] },
+  { group: "AI / ML", items: ["RAG", "FAISS", "InsightFace", "CUDA", "TensorRT"] },
+  { group: "Web", items: ["Next.js", "React", "FastAPI", "Flask"] },
+  { group: "Cloud", items: ["Azure", "Entra ID (SSO)", "Microsoft Graph", "Microservices"] },
+  { group: "Core", items: ["Dynamics 365", "Power BI", "System Design", "DSA"] },
 ];
 
-export type Experience = {
-  company: string;
-  role: string;
-  period: string;
-  points: string[];
-};
+export type Experience = { company: string; role: string; period: string; points: string[] };
 export const experience: Experience[] = [
   {
     company: "Fourth Partner Energy",
     role: "Digital Transformation & New Initiatives",
     period: "Nov 2024 — Present",
     points: [
-      "Architected the ESG Digital Hub — a Hub-and-Spoke microservices portal unifying 5 EHS/ESG safety workflows with a self-hosted RAG assistant.",
-      "Built FPEL PhotoBooth: in-memory vector search returning matches in ~20 ms over ~90k face embeddings, with an 88% faster GPU embedding pipeline.",
-      "Shipped D365 F&O submodules — Audit Checklist (+40% audit efficiency) and Grievance Redressal (−35% resolution time).",
+      "Built the ESG Digital Hub — one portal for five safety & compliance workflows, with a self-hosted AI assistant.",
+      "Shipped FPEL PhotoBooth: find yourself across years of event photos in seconds.",
+      "Cut audit cycles 40% and grievance resolution 35% with D365 modules.",
     ],
   },
   {
@@ -89,8 +70,8 @@ export const experience: Experience[] = [
     role: "IT Support & Software Management Intern",
     period: "May 2024 — Nov 2024",
     points: [
-      "Automated reporting & asset tracking via Power BI and D365 — saved 75% of weekly prep time and cut data errors by 98%.",
-      "Deployed 4 domain-specific custom GPT solutions, driving AI adoption across 100+ employees.",
+      "Automated reporting — saved 75% of weekly prep time and cut data errors by 98%.",
+      "Rolled out 4 custom GPT tools across 100+ employees.",
     ],
   },
 ];
@@ -102,21 +83,20 @@ export const education = {
 };
 
 /* ============================================================
-   FEATURED WORK — completed, production platforms
+   FEATURED WORK — significant points up front, detail in "see more"
    ============================================================ */
-export type Metric = { value: string; label: string };
+export type ImpactPoint = { value: string; text: string };
 export type Featured = {
   id: string;
   index: string;
   name: string;
   tagline: string;
-  value: string;
   status: string;
-  accent: string; // subtle per-project decorative tint
+  accent: string;
   mockup: "dashboard" | "grid" | "faces";
-  bigStat: Metric;
-  metrics: Metric[];
-  features: string[];
+  heroStat: { value: string; label: string };
+  significant: ImpactPoint[];
+  seeMore: string[];
   stack: string[];
 };
 
@@ -125,84 +105,92 @@ export const featured: Featured[] = [
     id: "esg-digital-hub",
     index: "01",
     name: "ESG Digital Hub",
-    tagline: "A unified, role-aware EHS/ESG safety & compliance portal — with a fully self-hosted RAG assistant.",
-    value:
-      "Replaces a sprawl of spreadsheets, email threads and ad-hoc trackers with auditable, end-to-end digital safety workflows. The RAG assistant runs entirely inside FPEL's Azure tenant — zero external LLM calls.",
+    tagline: "One portal that replaced safety spreadsheets across every FPEL site.",
     status: "Live in production",
-    accent: "#3fb984",
+    accent: "#2dd4bf",
     mockup: "dashboard",
-    bigStat: { value: "5", label: "EHS/ESG modules unified into one portal" },
-    metrics: [
-      { value: "0", label: "external LLM calls — self-hosted RAG" },
-      { value: "4", label: "role personas via Entra ID SSO + RBAC" },
-      { value: "1–25", label: "risk scoring with auto-flagged SLAs" },
+    heroStat: { value: "5", label: "safety & compliance workflows unified in one portal" },
+    significant: [
+      { value: "5 modules", text: "Unifies five end-to-end safety & compliance workflows in one portal." },
+      { value: "Live", text: "Used daily in production by site engineers, project teams and ESG leadership." },
+      { value: "", text: "Replaced scattered spreadsheets, emails and ad-hoc trackers with one auditable system." },
+      { value: "0", text: "Self-hosted AI assistant answers EHS questions (English / Hindi) with zero external LLM calls." },
     ],
-    features: [
-      "Five audit-logged workflow state machines: Observations, Incidents (fishbone + CAPA), Permit-to-Work, Best Practice and Management Walkdowns",
-      "Self-hosted bilingual RAG: embed → FAISS retrieve → rerank → bounded context → LLM, streamed over SSE with source citations",
-      "Email-driven approvals — every state transition fires a Microsoft Graph mail with deep-link action tokens",
-      "Cross-module dashboards with Recharts and one-click ExcelJS export",
+    seeMore: [
+      "Five modules cover the full EHS/ESG function: Observations, Incidents, Permit-to-Work, Good Observation, and Senior Management Walkdowns.",
+      "Every state change fires a Microsoft Graph email with deep-link action tokens, so approvers act straight from Outlook on mobile.",
+      "Role-aware by design: four personas (ESG, SET, XCOM, USER) enforced server-side on every endpoint, with a full audit log per record.",
+      "Incidents get fishbone + why-tree root-cause analysis; observations get 1–25 risk scoring; walkdowns get risk-based SLAs (Fatal 24h, Serious 72h).",
+      "The self-hosted RAG assistant (BGE-M3 embeddings → FAISS → reranker → LLM) runs entirely inside FPEL's Azure tenant for data residency.",
+      "Grounded in FPEL's own ESMS, EHS and HIRA documents with source citations; answers stream live and auto-switch to Hindi.",
+      "Background workers chase pending reviews, overdue closures and expiring permits; dashboards offer filtering and one-click Excel export.",
     ],
-    stack: ["Next.js 15", "Python", "FastAPI", "FAISS", "BGE-M3", "Entra ID", "SQLite", "Azure"],
-  },
-  {
-    id: "fpel-app-directory",
-    index: "02",
-    name: "FPEL App Directory",
-    tagline: "One secure gateway to every enterprise app at FPEL.",
-    value:
-      "A single Azure AD-secured launchpad unifying 40+ internal enterprise applications — ERP, HRMS, AI automation, governance and analytics — into one personalized, glassmorphic dashboard for the whole organization.",
-    status: "Live in production",
-    accent: "#5a8cff",
-    mockup: "grid",
-    bigStat: { value: "40+", label: "enterprise apps in one personalized hub" },
-    metrics: [
-      { value: "SSO", label: "Azure AD, domain-restricted via MSAL" },
-      { value: "7", label: "app categories, drag-to-reorder per user" },
-      { value: "7", label: "REST endpoints behind a FastAPI core" },
-    ],
-    features: [
-      "Azure AD single sign-on (OAuth 2.0 Authorization Code Flow) with strict @fourthpartner.co domain restriction",
-      "Per-user app pinning and drag-to-reorder categories (@dnd-kit), persisted server-side",
-      "Real-time client-side search with no page reloads",
-      "Glassmorphic UI with per-category themes and GPU-accelerated, rAF-throttled scroll",
-    ],
-    stack: ["FastAPI", "React 18", "Vite", "MSAL", "SQLAlchemy", "Framer Motion", "Azure"],
+    stack: ["Next.js 15", "TypeScript", "Python RAG (FAISS)", "Entra ID", "SQLite", "Azure", "Microsoft Graph"],
   },
   {
     id: "fpel-photobooth",
-    index: "03",
+    index: "02",
     name: "FPEL PhotoBooth",
     tagline: "Upload a selfie, instantly find every photo of yourself.",
-    value:
-      "AI face search that scans a 90,000+ face index across thousands of event photos and returns every match in under 5 seconds — on CPU-only hosting — using deep-learning face embeddings and cosine-similarity matching against pre-computed indices.",
     status: "Live in production",
-    accent: "#a86bff",
+    accent: "#c084fc",
     mockup: "faces",
-    bigStat: { value: "< 5s", label: "to find yourself across a 90,000+ face index" },
-    metrics: [
-      { value: "~20 ms", label: "to match a face across ~90k embeddings" },
-      { value: "88%", label: "faster GPU preprocessing: 70h → 8h for 13k images" },
-      { value: "512-d", label: "ArcFace embeddings via InsightFace" },
+    heroStat: { value: "< 5s", label: "to find yourself across thousands of event photos" },
+    significant: [
+      { value: "< 5s", text: "Find every photo of yourself across years of event galleries — in seconds, not by scrolling." },
+      { value: "~20 ms", text: "Matches your face against ~93,000 indexed faces per query." },
+      { value: "CPU-only", text: "Runs on cheap CPU hosting — the heavy GPU work happens offline." },
+      { value: "", text: "Secure FPEL sign-in; photos never leave company control." },
     ],
-    features: [
-      "Microsoft Entra ID SSO, tenant + domain restricted, with per-user isolation of uploads & results",
-      "Hybrid engine: in-process NumPy matcher over an .npz index (~20 ms / query) with subprocess fallback",
-      "Secure SharePoint proxy — zero-buffer streaming of full-res downloads via an app-only Graph token",
-      "Offline CUDA / TensorRT embedding pipeline keeps live search near-instant on CPU",
+    seeMore: [
+      "Sign in with your FPEL Microsoft account, upload a selfie, and get back every photo of you from event galleries like the Annual Meet.",
+      "Deep-learning face matching (InsightFace ArcFace) reduces each face to a 512-dimension embedding, compared by cosine similarity.",
+      "Galleries are embedded ahead of time into per-year vector indices, so a live search never re-embeds gallery photos.",
+      "Matching is a single vectorised NumPy operation over ~93,000 stored faces — about 20 ms per query — cached in memory.",
+      "Search one year or the whole archive; results render as thumbnails proxied securely from SharePoint via Microsoft Graph.",
+      "Full-resolution downloads stream chunk-by-chunk from Graph to the browser, avoiding server memory spikes.",
+      "GPU (CUDA / TensorRT) builds the indices offline; the live web tier runs CPU-only on Azure App Service.",
     ],
-    stack: ["Python", "Flask", "InsightFace", "ONNX", "Microsoft Graph", "CUDA", "TensorRT", "Azure"],
+    stack: ["Python / Flask", "InsightFace (ArcFace)", "ONNX Runtime", "NumPy", "Microsoft Graph", "Entra ID SSO", "Azure"],
+  },
+  {
+    id: "fpel-app-directory",
+    index: "03",
+    name: "FPEL App Directory",
+    tagline: "One secure front door to every internal FPEL app.",
+    status: "Live in production",
+    accent: "#818cf8",
+    mockup: "grid",
+    heroStat: { value: "40+", label: "internal apps unified behind one login" },
+    significant: [
+      { value: "40+", text: "A single launchpad for 40+ scattered internal apps, grouped by function." },
+      { value: "", text: "Corporate sign-on locked to @fourthpartner.co — every other account is rejected at login." },
+      { value: "", text: "Each employee pins favourites and reorders sections, saved per person." },
+      { value: "0", text: "No separate web server in production — one app serves everything." },
+    ],
+    seeMore: [
+      "Centralizes 40+ tools (ERP, HRMS, AI automation, governance, analytics, asset, wellness) into seven function-based categories.",
+      "Single sign-on via Azure AD (OAuth 2.0 Authorization Code Flow + MSAL); a random state parameter guards every callback against CSRF.",
+      "Hard-restricted to verified @fourthpartner.co accounts; signed session cookies expire after 24 hours, HTTPS-only in production.",
+      "Per-user personalization: pin favourite apps and drag-reorder categories (@dnd-kit), both saved per user in the database.",
+      "Real-time client-side search filters by name and description with no page reloads.",
+      "Apps without a configured URL auto-render as 'Coming Soon'; launch URLs come from env, so one build targets any environment.",
+      "Decoupled SPA: a FastAPI backend serves the React + Vite build directly — no separate Node server runs in production.",
+    ],
+    stack: ["FastAPI", "React 18", "Vite", "Azure AD / MSAL", "SQLAlchemy", "Tailwind + Framer Motion", "Azure"],
   },
 ];
 
 /* ============================================================
-   ACTIVE PIPELINE — in-progress / UAT enterprise platforms
+   ACTIVE PIPELINE — in UAT, with status + detail from the READMEs
    ============================================================ */
 export type Pipeline = {
   id: string;
   name: string;
   tagline: string;
-  stat: string;
+  heroStat: { value: string; label: string };
+  statusDetail: string;
+  details: string[];
   tags: string[];
 };
 
@@ -210,30 +198,58 @@ export const pipeline: Pipeline[] = [
   {
     id: "governease",
     name: "GovernEase",
-    tagline: "Corporate governance & secretarial automation across FPEL's entire SPV portfolio, with live MCA sync and maker-checker control.",
-    stat: "183 entities · live MCA sync",
-    tags: ["RegTech", "Flask", "React", "Document Automation"],
+    tagline: "One auditable system for all company governance and compliance.",
+    heroStat: { value: "183", label: "group companies governed from a single platform" },
+    statusDetail: "Seeded with production data; deployed to Azure App Service for UAT.",
+    details: [
+      "Pulls live company and director data from the Ministry of Corporate Affairs by CIN.",
+      "A 24-hour smart cache reuses recent data, so paid lookups happen only when something actually changed.",
+      "Every change passes a maker-checker approval queue (Admin, Maker, Checker, Auditor) before it counts as official.",
+      "One-click statutory documents (DIR-8, MBP-1…) rendered to PDF, with a multi-provider fallback chain so one outage never blocks a sync.",
+    ],
+    tags: ["Governance", "MCA Sync", "RegTech"],
   },
   {
     id: "it-asset-dashboard",
     name: "IT Asset Dashboard",
-    tagline: "Always-on IT asset governance wired live into Dynamics 365 F&O — a composite fleet health score replacing a manual Excel-to-PPT ritual.",
-    stat: "Live D365 health score 0–100",
-    tags: ["D365 OData", "Node.js", "Dashboard"],
+    tagline: "A live dashboard that retired the monthly Excel-to-slides grind.",
+    heroStat: { value: "0–100", label: "live fleet-health score for every laptop" },
+    statusDetail: "Core modules live — allocation, folder access, maintenance, SSO, alerts; mailer pending production consent.",
+    details: [
+      "Connects to the company ERP (Dynamics 365) for live asset records, cached so reloads are instant and work offline.",
+      "Computes a 0–100 fleet-health score weighing asset age, warranty, refresh load and duplicate laptops.",
+      "Laptop hand-overs generate a signed policy-acknowledgement email and track pending vs. confirmed.",
+      "Folder-access requests flow through separate queues for requester, manager and IT, with a full audit trail.",
+    ],
+    tags: ["D365", "Dashboard", "IT Ops"],
   },
   {
     id: "mis-dashboard",
     name: "MIS Dashboard",
-    tagline: "One immersive Next.js hub unifying every department's MIS behind a single access-gated, SSO-protected origin.",
-    stat: "One app · one origin · edge-gated",
-    tags: ["Next.js", "MSAL", "MSSQL", "Edge Auth"],
+    tagline: "One secure portal for every department's operations data.",
+    heroStat: { value: "3-in-1", label: "department modules behind one access-gated login" },
+    statusDetail: "Asset Management & Digital Transformation modules live; HR module in progress.",
+    details: [
+      "One Next.js app, one server, one origin — no separate backends to run or maintain.",
+      "Microsoft sign-in plus a bootstrap admin login; access is granted per person, per module.",
+      "A signed 30-minute session is re-checked at the edge on every visit, so revoking access takes effect fast.",
+      "Heavy reports (an 80 MB workbook) are pre-crunched into a cached file so everyday loads stay fast.",
+    ],
+    tags: ["Next.js", "SSO", "Multi-dept"],
   },
   {
     id: "vendor-invoice-portal",
     name: "Vendor Invoice Portal",
-    tagline: "Self-service vendor invoicing with OCR auto-fill tuned for Indian GST invoices and bi-directional Dynamics 365 sync.",
-    stat: "OCR auto-fill ⇄ D365 sync",
-    tags: ["OCR", "Node.js", "ERP", "FinTech"],
+    tagline: "Vendors submit invoices; finance approves and books them in one place.",
+    heroStat: { value: "6", label: "invoice fields auto-read from a scan — no retyping" },
+    statusDetail: "Running end-to-end against the Dynamics 365 F&O sandbox.",
+    details: [
+      "Vendors self-register and go live only after an admin approves and links them to the ERP vendor code.",
+      "On-device OCR (Tesseract + PDF extraction) tuned for Indian invoice formats like GSTIN and PAN.",
+      "PO owner and approver are emailed automatically via Microsoft Graph the moment an invoice lands.",
+      "Two-way Dynamics 365 sync mirrors vendors and POs locally and pushes approved invoices back on a schedule.",
+    ],
+    tags: ["OCR", "ERP Sync", "Finance"],
   },
 ];
 

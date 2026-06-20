@@ -43,7 +43,7 @@ export default function PhotoMorph() {
         className="glow"
         style={{
           inset: "-8% -10% -4% -10%",
-          background: "radial-gradient(55% 60% at 50% 40%, rgba(244,182,60,0.4), transparent 72%)",
+          background: "radial-gradient(55% 60% at 50% 40%, rgb(var(--brand-rgb) / 0.42), transparent 72%)",
         }}
       />
       <div
@@ -69,24 +69,40 @@ export default function PhotoMorph() {
             <img src="/pro.jpg" alt="" aria-hidden className="h-full w-full object-cover" style={{ objectPosition: "50% 16%" }} />
             <div
               className="pointer-events-none absolute inset-0"
+              style={{
+                borderRadius: "1.85rem",
+                boxShadow:
+                  "inset 74px 0 100px -46px rgb(var(--brand-rgb) / 0.62), inset -74px 0 100px -46px rgb(var(--accent2-rgb) / 0.55)",
+              }}
+            />
+            <div
+              className="pointer-events-none absolute inset-0"
               style={{ background: "linear-gradient(180deg, transparent 55%, rgba(7,7,10,0.88) 100%)" }}
             />
             <div className="absolute inset-x-5 bottom-5">
-              <div className="t-label text-brand">On the clock</div>
-              <div className="mt-1.5">Building enterprise systems</div>
+              <div className="t-label text-brand-soft">On the clock</div>
+              <div className="mt-1.5 text-white">Building enterprise systems</div>
             </div>
           </div>
 
           {/* Back — candid */}
           <div className="card" style={{ ...faceBase, transform: "rotateY(180deg)" }}>
-            <img src="/casual.jpg" alt="" aria-hidden className="h-full w-full object-cover" style={{ objectPosition: "50% 28%" }} />
+            <img src="/casual-v2.jpg" alt="" aria-hidden className="h-full w-full object-cover" style={{ objectPosition: "50% 30%", imageOrientation: "none" }} />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                borderRadius: "1.85rem",
+                boxShadow:
+                  "inset 74px 0 100px -46px rgb(var(--accent2-rgb) / 0.6), inset -74px 0 100px -46px rgb(var(--brand-rgb) / 0.55)",
+              }}
+            />
             <div
               className="pointer-events-none absolute inset-0"
               style={{ background: "linear-gradient(180deg, transparent 52%, rgba(7,7,10,0.88) 100%)" }}
             />
             <div className="absolute inset-x-5 bottom-5">
               <div className="t-label text-brand-soft">Off the clock</div>
-              <div className="mt-1.5">Competitive programmer at heart</div>
+              <div className="mt-1.5 text-white">Competitive programmer at heart</div>
             </div>
           </div>
         </div>

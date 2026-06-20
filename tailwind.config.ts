@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class", '[data-theme="dark"]'],
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -10,31 +11,30 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          DEFAULT: "#07070A",
-          soft: "#0B0B11",
-          raised: "#101019",
+          DEFAULT: "rgb(var(--bg-rgb) / <alpha-value>)",
+          soft: "rgb(var(--bg-soft-rgb) / <alpha-value>)",
+          raised: "rgb(var(--surface-rgb) / <alpha-value>)",
         },
         surface: {
-          DEFAULT: "#121319",
-          2: "#181A22",
-          3: "#1F212B",
+          DEFAULT: "rgb(var(--surface-rgb) / <alpha-value>)",
+          2: "rgb(var(--surface-2-rgb) / <alpha-value>)",
+          3: "rgb(var(--surface-3-rgb) / <alpha-value>)",
         },
         line: {
-          DEFAULT: "rgba(255,255,255,0.08)",
-          soft: "rgba(255,255,255,0.045)",
+          DEFAULT: "var(--line)",
+          soft: "var(--line-soft)",
         },
         ink: {
-          DEFAULT: "#F2F0EC",
-          2: "#A7A7B0",
-          3: "#6C6C77",
+          DEFAULT: "rgb(var(--ink-rgb) / <alpha-value>)",
+          2: "rgb(var(--ink-2-rgb) / <alpha-value>)",
+          3: "rgb(var(--ink-3-rgb) / <alpha-value>)",
         },
         brand: {
-          DEFAULT: "#F4B63C",
-          soft: "#FFD27A",
-          deep: "#C98A18",
-          ink: "#160F02",
+          DEFAULT: "rgb(var(--brand-rgb) / <alpha-value>)",
+          soft: "rgb(var(--brand-soft-rgb) / <alpha-value>)",
+          deep: "rgb(var(--brand-deep-rgb) / <alpha-value>)",
         },
-        cool: "#5A6BFF",
+        accent2: "rgb(var(--accent2-rgb) / <alpha-value>)",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
