@@ -11,6 +11,7 @@ function PipelineCard({ p }: { p: Pipeline }) {
   const [open, setOpen] = useState(false);
   return (
     <motion.article
+      id={p.id}
       onClick={() => setOpen((o) => !o)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -24,7 +25,7 @@ function PipelineCard({ p }: { p: Pipeline }) {
       whileHover={{ y: -6 }}
       whileTap={{ scale: 0.985 }}
       transition={{ type: "spring", stiffness: 380, damping: 15 }}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-line bg-surface/40 p-6 transition-colors duration-500 hover:border-brand/40"
+      className="group relative scroll-mt-24 cursor-pointer overflow-hidden rounded-2xl border border-line bg-surface/40 p-6 transition-colors duration-500 hover:border-brand/40"
     >
       <div className="absolute inset-x-0 top-0 h-[2px] overflow-hidden">
         <div
@@ -34,7 +35,10 @@ function PipelineCard({ p }: { p: Pipeline }) {
       </div>
 
       <div className="flex items-start justify-between gap-4">
-        <h3 className="t-h3 font-medium">{p.name}</h3>
+        <h3 className="t-h3 font-medium">
+          <span className="tnum mr-2 text-ink-3">{p.index}</span>
+          {p.name}
+        </h3>
         <span className="chip shrink-0 !border-accent2/30 !text-accent2">
           <span className="signal" />
           In UAT
@@ -98,7 +102,7 @@ export default function ActivePipeline() {
 
       <div className="shell relative">
         <SectionHeading
-          eyebrow="Active Pipeline · In UAT"
+          eyebrow="Active Pipeline · 04–07 · In UAT"
           title="Enterprise platforms I'm building right now."
           kicker="Heavier systems currently in user-acceptance testing — proof of ongoing capacity to design, build and ship."
         />

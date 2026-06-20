@@ -77,8 +77,11 @@ export default function Contact() {
 
         <div className="hairline mt-20" />
 
+        {/* Colophon slug — closes the dossier */}
+        <div className="pt-7 text-center t-label faint tnum">{profile.dossierSlug}</div>
+
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-6 pt-8 md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-6 pt-6 md:flex-row">
           <div className="flex items-center gap-2.5">
             <span className="grid h-8 w-8 place-items-center rounded-full border border-line t-sm font-semibold text-brand">
               {profile.initials}

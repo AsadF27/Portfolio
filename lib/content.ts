@@ -1,6 +1,7 @@
 /**
  * Single source of truth for portfolio content.
- * Projects are curated two-tier: significant points (front) + see-more detail (tucked).
+ * Numbered engineering dossier: each system has a before→after delta,
+ * significant points (front) and see-more detail (tucked).
  */
 
 export const profile = {
@@ -13,6 +14,7 @@ export const profile = {
   email: "asadfaridi27@gmail.com",
   phone: "+91 92295 75417",
   available: "Open to building enterprise AI platforms",
+  dossierSlug: "DOSSIER · DIGITAL TRANSFORMATION · 03 LIVE · 04 IN UAT",
 
   uspLead: "I build enterprise AI systems that turn",
   uspRotate: ["weeks of manual work", "fragmented spreadsheets", "hours of GPU compute", "siloed workflows"],
@@ -83,7 +85,7 @@ export const education = {
 };
 
 /* ============================================================
-   FEATURED WORK — significant points up front, detail in "see more"
+   FEATURED WORK (01–03) — shipped, live in production
    ============================================================ */
 export type ImpactPoint = { value: string; text: string };
 export type Featured = {
@@ -94,6 +96,7 @@ export type Featured = {
   status: string;
   accent: string;
   mockup: "dashboard" | "grid" | "faces";
+  delta: { before: string; after: string };
   heroStat: { value: string; label: string };
   significant: ImpactPoint[];
   seeMore: string[];
@@ -109,6 +112,7 @@ export const featured: Featured[] = [
     status: "Live in production",
     accent: "#2dd4bf",
     mockup: "dashboard",
+    delta: { before: "Weeks of safety spreadsheets & email trackers", after: "5 workflows in one auditable portal" },
     heroStat: { value: "5", label: "safety & compliance workflows unified in one portal" },
     significant: [
       { value: "5 modules", text: "Unifies five end-to-end safety & compliance workflows in one portal." },
@@ -135,6 +139,7 @@ export const featured: Featured[] = [
     status: "Live in production",
     accent: "#c084fc",
     mockup: "faces",
+    delta: { before: "Scrolling thousands of event photos by hand", after: "Your face found in under 5 seconds" },
     heroStat: { value: "< 5s", label: "to find yourself across thousands of event photos" },
     significant: [
       { value: "< 5s", text: "Find every photo of yourself across years of event galleries — in seconds, not by scrolling." },
@@ -161,6 +166,7 @@ export const featured: Featured[] = [
     status: "Live in production",
     accent: "#818cf8",
     mockup: "grid",
+    delta: { before: "40+ tools scattered across the company", after: "One secure launchpad, one login" },
     heroStat: { value: "40+", label: "internal apps unified behind one login" },
     significant: [
       { value: "40+", text: "A single launchpad for 40+ scattered internal apps, grouped by function." },
@@ -182,10 +188,11 @@ export const featured: Featured[] = [
 ];
 
 /* ============================================================
-   ACTIVE PIPELINE — in UAT, with status + detail from the READMEs
+   ACTIVE PIPELINE (04–07) — in UAT
    ============================================================ */
 export type Pipeline = {
   id: string;
+  index: string;
   name: string;
   tagline: string;
   heroStat: { value: string; label: string };
@@ -197,6 +204,7 @@ export type Pipeline = {
 export const pipeline: Pipeline[] = [
   {
     id: "governease",
+    index: "04",
     name: "GovernEase",
     tagline: "One auditable system for all company governance and compliance.",
     heroStat: { value: "183", label: "group companies governed from a single platform" },
@@ -211,6 +219,7 @@ export const pipeline: Pipeline[] = [
   },
   {
     id: "it-asset-dashboard",
+    index: "05",
     name: "IT Asset Dashboard",
     tagline: "A live dashboard that retired the monthly Excel-to-slides grind.",
     heroStat: { value: "0–100", label: "live fleet-health score for every laptop" },
@@ -225,6 +234,7 @@ export const pipeline: Pipeline[] = [
   },
   {
     id: "mis-dashboard",
+    index: "06",
     name: "MIS Dashboard",
     tagline: "One secure portal for every department's operations data.",
     heroStat: { value: "3-in-1", label: "department modules behind one access-gated login" },
@@ -239,6 +249,7 @@ export const pipeline: Pipeline[] = [
   },
   {
     id: "vendor-invoice-portal",
+    index: "07",
     name: "Vendor Invoice Portal",
     tagline: "Vendors submit invoices; finance approves and books them in one place.",
     heroStat: { value: "6", label: "invoice fields auto-read from a scan — no retyping" },
@@ -251,6 +262,13 @@ export const pipeline: Pipeline[] = [
     ],
     tags: ["OCR", "ERP Sync", "Finance"],
   },
+];
+
+/** Unified index for the dossier table-of-contents + the active rail (01–07). */
+export type SystemEntry = { id: string; index: string; name: string; outcome: string; live: boolean };
+export const systems: SystemEntry[] = [
+  ...featured.map((f) => ({ id: f.id, index: f.index, name: f.name, outcome: f.delta.after, live: true })),
+  ...pipeline.map((p) => ({ id: p.id, index: p.index, name: p.name, outcome: p.heroStat.label, live: false })),
 ];
 
 export const navLinks = [

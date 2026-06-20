@@ -182,6 +182,23 @@ body {
   font-size: var(--fs-small);
   line-height: 1.5;
 }
+/* tabular figures — numerals line up like instrumentation */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+/* oversized ghosted dossier numeral bleeding behind a heading */
+.ghost-numeral {
+  position: absolute;
+  z-index: 0;
+  font-size: clamp(6rem, 13vw, 11rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: rgb(var(--ink-rgb) / 0.045);
+  pointer-events: none;
+  user-select: none;
+}
 
 .sr-only {
   position: absolute;

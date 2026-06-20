@@ -28,9 +28,15 @@ export default function Hero() {
       {/* Main */}
       <div className="shell relative z-10 flex flex-1 items-center">
         <div className="w-full max-w-[60rem]">
-          <div className="eyebrow mb-7">
-            <span className="signal" />
-            {profile.available}
+          <div className="mb-8">
+            <div className="hairline" />
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+              <span className="t-label faint tnum">{profile.dossierSlug}</span>
+              <span className="eyebrow">
+                <span className="signal" />
+                {profile.available}
+              </span>
+            </div>
           </div>
 
           <h1 className="t-display max-w-[22ch]">
