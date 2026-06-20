@@ -1,0 +1,395 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DESIGN TOKENS
+   One brand colour (solar gold), a deep ink canvas, lighter
+   card surfaces for depth, six type sizes — nothing more.
+   ============================================================ */
+:root {
+  --bg: #07070a;
+  --bg-soft: #0b0b11;
+  --surface: #121319;
+  --surface-2: #181a22;
+  --surface-3: #1f212b;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-soft: rgba(255, 255, 255, 0.045);
+
+  --ink: #f2f0ec;
+  --ink-2: #adadb6;
+  --ink-3: #8b8b95;
+
+  --brand: #f4b63c;
+  --brand-soft: #ffd27a;
+  --brand-deep: #c98a18;
+  --brand-ink: #160f02;
+  --cool: #5a6bff;
+
+  /* The entire scale — exactly six font sizes, nothing else */
+  --fs-display: clamp(3rem, 1.6rem + 6.4vw, 6.75rem); /* 1 */
+  --fs-h1: clamp(2.1rem, 1.4rem + 3.2vw, 3.9rem); /* 2 */
+  --fs-h2: clamp(1.5rem, 1.18rem + 1.5vw, 2.2rem); /* 3 */
+  --fs-h3: clamp(1.12rem, 1.02rem + 0.5vw, 1.4rem); /* 4 */
+  --fs-body: 1.0625rem; /* 5 */
+  --fs-small: 0.84rem; /* 6 — captions, labels, chips, meta */
+  --fs-label: 0.84rem; /* alias of small (uppercase variant) */
+
+  --shell: 1240px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis handles smoothing */
+}
+
+/* Lenis smooth-scroll recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  letter-spacing: -0.011em;
+  overflow-x: hidden;
+  font-feature-settings: "ss01", "cv01", "cv11";
+}
+
+::selection {
+  background: var(--brand);
+  color: var(--brand-ink);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #22232d;
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #30323e;
+}
+
+/* ============================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================ */
+.t-display {
+  font-size: var(--fs-display);
+  line-height: 1.02;
+  letter-spacing: -0.032em;
+  font-weight: 600;
+}
+.t-h1 {
+  font-size: var(--fs-h1);
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+  font-weight: 600;
+}
+.t-h2 {
+  font-size: var(--fs-h2);
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  font-weight: 600;
+}
+.t-h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  letter-spacing: -0.014em;
+  font-weight: 500;
+}
+.t-label {
+  font-size: var(--fs-label);
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.t-sm {
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Keyboard focus — visible on every interactive element */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.75rem);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(5rem, 11vw, 9.5rem);
+}
+
+/* ============================================================
+   TEXT EFFECTS
+   ============================================================ */
+.gold-text {
+  background: linear-gradient(100deg, var(--brand-soft) 0%, var(--brand) 45%, var(--brand-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.muted {
+  color: var(--ink-2);
+}
+.faint {
+  color: var(--ink-3);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--brand), transparent);
+}
+
+/* ============================================================
+   BUTTONS — default / hover / active / disabled
+   Generous padding: horizontal ~2x vertical.
+   ============================================================ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.05rem 2.2rem;
+  border-radius: 999px;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.45s var(--ease), background 0.4s var(--ease),
+    border-color 0.4s var(--ease), color 0.4s var(--ease), box-shadow 0.45s var(--ease);
+  will-change: transform;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--brand-soft), var(--brand));
+  color: var(--brand-ink);
+  box-shadow: 0 8px 30px -10px rgba(244, 182, 60, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 48px -14px rgba(244, 182, 60, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-ghost:hover {
+  border-color: rgba(244, 182, 60, 0.55);
+  color: var(--brand-soft);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -22px rgba(244, 182, 60, 0.4);
+}
+
+.btn-lg {
+  padding: 1.4rem 3rem;
+}
+
+/* ============================================================
+   SURFACES
+   Depth from lighter surfaces + faint top highlight, not harsh shadows.
+   ============================================================ */
+.card {
+  position: relative;
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 30px 60px -40px rgba(0, 0, 0, 0.8);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: var(--fs-small);
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.hairline {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* Soft radial brand glow behind elements */
+.glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   FILM GRAIN — premium texture overlay
+   ============================================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 999px;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+.cursor-ring[data-active="true"] {
+  width: 64px;
+  height: 64px;
+  background: rgba(244, 182, 60, 0.12);
+  border-color: rgba(244, 182, 60, 0.5);
+}
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor {
+    cursor: none;
+  }
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
+}
+
+/* Animated reveal default (before GSAP hydration, content stays visible if JS off) */
+.will-reveal {
+  opacity: 1;
+}
+
+/* Marquee row */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .grain {
+    display: none;
+  }
+}
